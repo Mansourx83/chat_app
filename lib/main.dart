@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scholar_chat/firebase_options.dart';
+import 'package:scholar_chat/screens/chat_screen.dart';
 import 'package:scholar_chat/screens/login_screen.dart';
 import 'package:scholar_chat/screens/singup_screen.dart';
 
@@ -21,6 +22,7 @@ class ChatApp extends StatelessWidget {
       routes: {
         LoginPage.id: (context) => LoginPage(),
         SingupPage.id: (context) => SingupPage(),
+        ChatPage.id: (context) => ChatPage(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: LoginPage.id,

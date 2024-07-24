@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
-  MyTextField({
+class MyFormTextField extends StatelessWidget {
+  MyFormTextField({
     super.key,
     required this.hint,
     required this.onCahnged,
@@ -12,7 +12,13 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: TextField(
+      child: TextFormField(
+        validator: (data) {
+          if (data!.isEmpty) {
+            return 'Field is requierd';
+          }
+        },
+        cursorErrorColor: Colors.red,
         onChanged: onCahnged,
         cursorColor: Colors.white,
         style: const TextStyle(color: Colors.white),
