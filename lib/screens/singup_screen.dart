@@ -19,6 +19,7 @@ class _SingupPageState extends State<SingupPage> {
   String? email, pass;
 
   bool isLoading = false;
+  bool _isObscure = true;
 
   GlobalKey<FormState> formKey = GlobalKey();
 
@@ -69,16 +70,28 @@ class _SingupPageState extends State<SingupPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  //get email from textfield
+                  // Get email from textfield
                   MyFormTextField(
                     hint: 'Email',
                     onCahnged: (data) {
                       email = data;
                     },
                   ),
-                  //get password from textfield
-
+                  // Get password from textfield
                   MyFormTextField(
+                    isPassword: true,
+                    obscureText: _isObscure,
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
                     hint: 'Password',
                     onCahnged: (data) {
                       pass = data;
@@ -88,11 +101,12 @@ class _SingupPageState extends State<SingupPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
                       text: 'Sign up',
-                      //handel Sign up firebase
+                      // Handle sign up with Firebase
                       function: () async {
                         if (formKey.currentState!.validate()) {
-                          isLoading = true;
-                          setState(() {});
+                          setState(() {
+                            isLoading = true;
+                          });
                           try {
                             await registerUser();
                             showBar(context,
@@ -113,13 +127,14 @@ class _SingupPageState extends State<SingupPage> {
                             }
                           } catch (e) {
                             showBar(context,
-                                text: 'The an error.', color: Colors.red);
+                                text: 'An error occurred. Please try again.',
+                                color: Colors.red);
                             print(e);
                           }
-                          isLoading = false;
-                          setState(() {});
-                        } else
-                          ();
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       },
                     ),
                   ),
@@ -127,7 +142,7 @@ class _SingupPageState extends State<SingupPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Already have an account',
+                        'Already have an account?',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -156,9 +171,9 @@ class _SingupPageState extends State<SingupPage> {
     );
   }
 
-  //default firebase
+  // Default Firebase registration
   Future<void> registerUser() async {
-    final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email!,
       password: pass!,
     );

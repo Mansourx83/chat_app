@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scholar_chat/constints.dart';
+import 'package:scholar_chat/models/message.dart';
 
-class ChatBuble extends StatelessWidget {
+class ChatBible extends StatelessWidget {
+  final Message message;
+
+  const ChatBible({super.key, required this.message});
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -18,7 +22,7 @@ class ChatBuble extends StatelessWidget {
           color: kPrimaryColor,
         ),
         child: Text(
-          'i am new user',
+          message.message,
           style: TextStyle(
             color: Colors.white,
           ),

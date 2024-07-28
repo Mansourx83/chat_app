@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   String? email, pass;
 
   bool isLoading = false;
+  bool _isObscure = true;
 
   GlobalKey<FormState> formKey = GlobalKey();
 
@@ -77,6 +78,19 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   MyFormTextField(
+                    isPassword: true,
+                    obscureText: _isObscure,
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
                     hint: 'Password',
                     onCahnged: (data) {
                       pass = data;
@@ -88,10 +102,11 @@ class _LoginPageState extends State<LoginPage> {
                       text: 'Login',
                       function: () async {
                         if (formKey.currentState!.validate()) {
-                          isLoading = true;
-                          setState(() {});
+                          setState(() {
+                            isLoading = true;
+                          });
                           try {
-                            await sinInWithEmailAndPass();
+                            await signInWithEmailAndPass();
                             Navigator.pushNamedAndRemoveUntil(
                                 context, ChatPage.id, (route) => false);
                           } on FirebaseAuthException catch (e) {
@@ -111,10 +126,10 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.red);
                             print(e);
                           }
-                          isLoading = false;
-                          setState(() {});
-                        } else
-                          () {};
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       },
                     ),
                   ),
@@ -122,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Dont have any account ?',
+                        'Don\'t have an account?',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -133,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushNamed(context, SingupPage.id);
                         },
                         child: const Text(
-                          'Sing Up',
+                          'Sign Up',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.white30,
@@ -151,8 +166,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> sinInWithEmailAndPass() async {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+  Future<void> signInWithEmailAndPass() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email!,
       password: pass!,
     );
