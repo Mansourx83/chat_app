@@ -113,7 +113,8 @@ class _SingupPageState extends State<SingupPage> {
                                 text: 'The account is created.',
                                 color: Colors.green);
                             Navigator.pushNamedAndRemoveUntil(
-                                context, ChatPage.id, (route) => false);
+                                context, ChatPage.id, (route) => false,
+                                arguments: email);
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'weak-password') {
                               showBar(context,

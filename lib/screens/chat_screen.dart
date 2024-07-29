@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatPage extends StatelessWidget {
   static String id = 'ChatPage';
+
   final _controller = ScrollController();
   CollectionReference messages =
       FirebaseFirestore.instance.collection(kMessageCollections);
@@ -14,8 +15,9 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var email = ModalRoute.of(context)!.settings.arguments;
     return StreamBuilder<QuerySnapshot>(
-        stream: messages.orderBy(kTime).snapshots(),
+        stream: messages.orderBy(kTime, descending: true).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Message> messageList = [];
@@ -45,12 +47,15 @@ class ChatPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                      reverse: true,
                       controller: _controller,
                       itemCount: messageList.length,
                       itemBuilder: (context, index) {
-                        return ChatBible(
-                          message: messageList[index],
-                        );
+                        return messageList[index].id == email
+                            ? ChatBible(
+                                message: messageList[index],
+                              )
+                            : ChatBibleFriend(message: messageList[index]);
                       },
                     ),
                   ),
@@ -62,10 +67,11 @@ class ChatPage extends StatelessWidget {
                         messages.add({
                           kMessage: data,
                           kTime: DateTime.now(),
+                          "id": email,
                         });
                         controller.clear();
                         _controller.animateTo(
-                          _controller.position.maxScrollExtent,
+                          0,
                           duration: const Duration(seconds: 2),
                           curve: Curves.easeIn,
                         );
@@ -88,9 +94,9 @@ class ChatPage extends StatelessWidget {
               ),
             );
           } else {
-            Text('Loafing........');
+            const Text('Loafing........');
           }
-          return Text('ther an error');
+          return const Text('ther an error');
         });
   }
 }

@@ -108,7 +108,8 @@ class _LoginPageState extends State<LoginPage> {
                           try {
                             await signInWithEmailAndPass();
                             Navigator.pushNamedAndRemoveUntil(
-                                context, ChatPage.id, (route) => false);
+                                context, ChatPage.id, (route) => false,
+                                arguments: email);
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               showBar(context,

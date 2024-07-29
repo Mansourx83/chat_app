@@ -13,7 +13,7 @@ class MyButton extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all(
-          Size(double.infinity, 60),
+          const Size(double.infinity, 60),
         ),
       ),
       onPressed: function,
