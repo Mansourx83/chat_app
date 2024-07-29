@@ -16,12 +16,4 @@ A real-time chat application built with Flutter and Firebase, designed for seaml
 - **Firebase Authentication**: For secure user authentication.
 - **Firebase Cloud Firestore**: For real-time database functionalities
 
-## Dependencies
 
-  cloud_firestore: ^4.17.5
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^4.19.5
-  firebase_core: ^2.30.1
-  flutter:
-    sdk: flutter
-  modal_progress_hud_nsn: ^0.5.1
