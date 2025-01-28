@@ -135,7 +135,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, SingupPage.id);
+                            Navigator.pushNamed(context, SignupPage.id);
                           },
                           child: const Text(
                             'Sign Up',
@@ -154,13 +154,6 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> signInWithEmailAndPass() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email!,
-      password: pass!,
     );
   }
 }

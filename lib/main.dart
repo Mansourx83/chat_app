@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scholar_chat/firebase_options.dart';
 import 'package:scholar_chat/screens/chat_screen.dart';
 import 'package:scholar_chat/screens/cubits/login_cubit/login_cubit.dart';
+import 'package:scholar_chat/screens/cubits/singup_cubit/singup_cubit.dart';
 import 'package:scholar_chat/screens/login_screen.dart';
 import 'package:scholar_chat/screens/singup_screen.dart';
 
@@ -20,12 +21,19 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SignupCubit(),
+        ),
+      ],
       child: MaterialApp(
         routes: {
           LoginPage.id: (context) => LoginPage(),
-          SingupPage.id: (context) => SingupPage(),
+          SignupPage.id: (context) => SignupPage(),
           ChatPage.id: (context) => ChatPage(),
         },
         debugShowCheckedModeBanner: false,
