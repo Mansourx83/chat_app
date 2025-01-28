@@ -28,9 +28,20 @@ class LoginPage extends StatelessWidget {
         if (state is LoginLoading) {
           isLoading = true;
         } else if (state is LoginSuccess) {
+          showBar(
+            context,
+            text: 'Login Success',
+            color: Colors.green,
+          );
+          isLoading = false;
           Navigator.pushNamed(context, ChatPage.id);
-        } else {
-          showBar(context, text: 'something went wrong', color: Colors.red);
+        } else if (state is LoginFailure) {
+          showBar(
+            context,
+            text: state.errorMessage,
+            color: Colors.red,
+          );
+          isLoading = false;
         }
       },
       child: SafeArea(
@@ -105,30 +116,9 @@ class LoginPage extends StatelessWidget {
                         text: 'Login',
                         function: () async {
                           if (formKey.currentState!.validate()) {
-                            isLoading = true;
-                            try {
-                              await signInWithEmailAndPass();
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, ChatPage.id, (route) => false,
-                                  arguments: email);
-                            } on FirebaseAuthException catch (e) {
-                              if (e.code == 'user-not-found') {
-                                showBar(context,
-                                    text: 'No user found for that email.',
-                                    color: Colors.red);
-                              } else if (e.code == 'wrong-password') {
-                                showBar(context,
-                                    text:
-                                        'Wrong password provided for that user.',
-                                    color: Colors.red);
-                              }
-                            } catch (e) {
-                              showBar(context,
-                                  text: 'An error occurred. Please try again.',
-                                  color: Colors.red);
-                              print(e);
-                            }
-                            isLoading = false;
+                            BlocProvider.of<LoginCubit>(context)
+                                .signInWithEmailAndPass(
+                                    email: email!, pass: pass!);
                           }
                         },
                       ),
