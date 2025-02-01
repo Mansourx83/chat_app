@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scholar_chat/firebase_options.dart';
 import 'package:scholar_chat/screens/chat_screen.dart';
+import 'package:scholar_chat/screens/cubits/chat_cubit/chat_cubit.dart';
 import 'package:scholar_chat/screens/cubits/login_cubit/login_cubit.dart';
 import 'package:scholar_chat/screens/cubits/singup_cubit/singup_cubit.dart';
 import 'package:scholar_chat/screens/login_screen.dart';
@@ -28,6 +29,9 @@ class ChatApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SignupCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChatCubit(),
         ),
       ],
       child: MaterialApp(
