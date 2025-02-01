@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat/constints.dart';
 import 'package:scholar_chat/screens/chat_screen.dart';
+import 'package:scholar_chat/screens/cubits/chat_cubit/chat_cubit.dart';
 import 'package:scholar_chat/screens/cubits/login_cubit/login_cubit.dart';
 import 'package:scholar_chat/screens/singup_screen.dart';
 import 'package:scholar_chat/widgets/mybutton.dart';
@@ -33,8 +34,13 @@ class LoginPage extends StatelessWidget {
             text: 'Login Success',
             color: Colors.green,
           );
+          BlocProvider.of<ChatCubit>(context).getMessage();
           isLoading = false;
-          Navigator.pushNamed(context, ChatPage.id);
+          Navigator.pushNamed(
+            context,
+            ChatPage.id,
+            arguments: email,
+          );
         } else if (state is LoginFailure) {
           showBar(
             context,
