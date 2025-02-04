@@ -4,8 +4,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat/constints.dart';
 import 'package:scholar_chat/helper/showbar.dart';
 import 'package:scholar_chat/screens/chat_screen.dart';
+import 'package:scholar_chat/screens/cubits/auth_cubit/auth_cubit.dart';
 import 'package:scholar_chat/screens/cubits/chat_cubit/chat_cubit.dart';
-import 'package:scholar_chat/screens/cubits/singup_cubit/singup_cubit.dart';
 import 'package:scholar_chat/widgets/mybutton.dart';
 import 'package:scholar_chat/widgets/mytextfield.dart';
 
@@ -19,7 +19,7 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignupCubit, SignupState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignupLoading) {
           isLoading = true;
@@ -112,7 +112,7 @@ class SignupPage extends StatelessWidget {
                           // Handle sign up with Firebase
                           function: () async {
                             if (formKey.currentState!.validate()) {
-                              BlocProvider.of<SignupCubit>(context)
+                              BlocProvider.of<AuthCubit>(context)
                                   .registerUser(email: email!, pass: pass!);
                             }
                           },

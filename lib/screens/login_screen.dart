@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat/constints.dart';
 import 'package:scholar_chat/screens/chat_screen.dart';
+import 'package:scholar_chat/screens/cubits/auth_cubit/auth_cubit.dart';
 import 'package:scholar_chat/screens/cubits/chat_cubit/chat_cubit.dart';
-import 'package:scholar_chat/screens/cubits/login_cubit/login_cubit.dart';
 import 'package:scholar_chat/screens/singup_screen.dart';
 import 'package:scholar_chat/widgets/mybutton.dart';
 import 'package:scholar_chat/widgets/mytextfield.dart';
@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -122,7 +122,7 @@ class LoginPage extends StatelessWidget {
                         text: 'Login',
                         function: () async {
                           if (formKey.currentState!.validate()) {
-                            BlocProvider.of<LoginCubit>(context)
+                            BlocProvider.of<AuthCubit>(context)
                                 .signInWithEmailAndPass(
                                     email: email!, pass: pass!);
                           }
